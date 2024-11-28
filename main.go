@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"flag"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -64,12 +65,20 @@ func readValues(path string) ([]int, error) {
 
 func main() {
 
-	values, err := readValues("water_1000.txt")
+	path := flag.String("path", "", "Path to the txt file")
+	flag.Parse()
+
+	if path == nil {
+		fmt.Println("usage: -path path to your file")
+		return
+	}
+
+	values, err := readValues(*path)
 	if err != nil {
-		log.Print(err)
+		fmt.Println(err)
 	}
 
 	bestValue := calculateBucket(values)
-	log.Print(bestValue)
+	fmt.Println(bestValue)
 
 }
